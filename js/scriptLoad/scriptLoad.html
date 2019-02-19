@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style></style>
+
+<!-- 默认情况下js的脚本执行是同步和阻塞的 -->
+
+<!-- 作用 -->
+<!-- defer 属性标注的脚本是延迟脚本，使得浏览器延迟脚本的执行，也就是说，脚本会被异步下载但是不会被执行，直到文档的载入和解析完成，并可以操作，脚本才会被执行。
+async 属性标注的脚本是异步脚本，即异步下载脚本时，不会阻塞文档解析，但是一旦下载完成后，立即执行，阻塞文档解析。 -->
+
+<!-- 区别 -->
+
+<!-- 延迟脚本会按他们在文档里的出现顺序执行
+异步脚本在它们载入后执行，但是不能保证执行顺序。 -->
+
+<!-- 使用async的意义就在于使得下载脚本时，不会阻塞文档的解析。因为async的脚本执行顺序是没有保证的，因此要确认脚本间没有依赖关系。
+现在呢基本上都是在文档的最后写脚本，那么这和 defer 的区别在哪里呢? -->
+<!-- 第一点当然是异步下载脚本了，第二点就是 使用async或defer任何一个都意味着在脚本里不能出现 document.write -->
+<script async src="./async.js"></script>
+<script defer src="./defer.js"></script>
+<script src="./normal.js"></script>
+  </head>
+  <body>
+     加载script
+     <div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div>
+          <div></div>
+          <div>
+            <div></div>
+            <div></div>
+            <div>
+              <div></div>
+              <div></div>
+              <div>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+              </div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div></div>
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+     </div>
+
+  </body>
+</html>

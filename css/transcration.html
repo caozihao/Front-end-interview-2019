@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    div {
+      width: 100px;
+      height: 100px;
+      background: blue;
+      /* 属性规定应用过渡效果的 CSS 属性的名称 */
+      /* transition-property: height,width; */
+      /* 属性规定完成过渡效果需要花费的时间 */
+      /* transition-duration: 2s; */
+      /* 属性规定过渡效果的速度曲线。 */
+      /* transition-timing-function: ease-in-out; */
+      /* 属性规定过渡效果何时开始 */
+      /* transition-delay:2s*/
+
+      /* trnsition:property duration timing-fuction delay  */
+      transition: all 2s ease 1s
+    }
+
+    div:hover {
+      width: 300px;
+      height:200px
+    }
+  </style>
+</head>
+
+<body>
+
+  <div></div>
+
+  <p>请把鼠标指针移动到蓝色的 div 元素上，就可以看到过渡效果。</p>
+
+  <p><b>注释：</b>本例在 Internet Explorer 中无效。</p>
+
+</body>
+
+</html>
