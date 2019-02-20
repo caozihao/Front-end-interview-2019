@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>demo</title>
+  <!-- <link rel="stylesheet" type="text/css"  href="./demo.css"/> -->
+  <style>
+    .parent{
+      width: 500px;
+      height: 200px;
+      border: 8px solid orange;
+    }
+
+    .child {
+      border: 10px solid blue;
+      width: 100%;
+      padding: 6px;
+    }
+
+    .content-box {
+      box-sizing: content-box;
+    }
+
+    .border-box {
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="parent">
+    <b>content-box</b>
+      Parent container
+    <div class="child content-box">
+        Child container
+      </div>
+  </div>
+   <br />
+
+<div class="parent">
+  <b>border-box</b>
+  Parent container
+  <div class="child border-box">
+      Child container
+    </div>
+  </div>
+    
+</body>
+
+</html>

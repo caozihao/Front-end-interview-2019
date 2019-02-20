@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- <link rel="stylesheet" type="text/css"  href="./demo.css"/> -->
+  <style>
+    /* .out{
+            width: 200px;
+            height: 200px;
+            border: 1px solid blue;
+        }
+        .f{
+            width: 50px;
+            height: 50px;
+            background: red;
+            float: left;
+        }
+        .inner{
+          overflow: auto;
+        } */
+
+  html,body{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+    }
+             .out{
+            background: blue;
+            width: 100%;
+            height: 100%;
+        }
+        .f{
+            float: left;
+            height: 100%;
+            background: red;
+        }
+        .r{
+            overflow: auto;
+            height: 100%;
+            background: yellow;
+        }
+  .out2{
+    overflow: hidden;
+  }
+.item{
+  height: 100px;
+  width: 100px;
+  background: blue;
+}
+.item-1{
+  margin: 10px;
+  /* display: inline-block; */
+}
+.item-2{
+  margin: 20px;
+}
+
+.wrapper{
+  overflow: hidden;
+}
+
+.clearfix {
+*zoom: 1;
+}
+.clearfix:after {
+content: ''; display: table; clear: both;
+}
+
+.cell {
+  display: table-cell;
+   width: 9999px;
+    height: 100%;
+    background: yellow;
+  *display: inline-block; 
+  *width: auto;
+
+}
+    </style>
+</head>
+
+<body>
+<!-- <div class="out">
+  <div class="f"></div>
+  <div class="inner">
+    我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+    我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+  </div>
+</div> -->
+<div class="out clearfix">
+    <div class="f">浮动元素1232312323123</div>
+<div class="cell">
+  我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+  我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+  我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+  我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+  我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+  我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+  我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+  我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+  我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+  我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+  我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+  我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+  我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本
+</div>
+<div class="cell">
+  列1
+</div>
+<div class="cell">
+  列2
+</div>
+<div class="cell">
+  列3
+</div>
+  </div>
+ <div class="out2">
+    <div class="item item-1">111</div>
+    <div class="item item-2">222</div>
+    <div class="wrapper">
+        <div class="item item-2">222</div>
+    </div>
+  </div>  
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>七种实现左侧固定，右侧自适应两栏布局的方法</title>
+  <!-- <link rel="stylesheet" type="text/css"  href="./demo.css"/> -->
+  <!-- 参考文章：https://segmentfault.com/a/1190000010698609 -->
+  <style>
+    /* 基本样式 */
+    .wrapper {
+        /* padding: 15px 20px; */
+        border: 1px dashed #ff6c60;
+    }
+    .left {
+        width: 120px;
+        background: lightseagreen;
+        border: 5px solid #ddd;
+    }
+    .right {
+        /* margin-left: 20px; */
+        background: greenyellow;
+        border: 5px solid #ddd;
+    }
+
+    /* 双inline-block方案 */
+    .wrapper-inline-block{
+      box-sizing: content-box;
+      /* 消除空格的影响 */
+      font-size: 0; 
+    }
+    .wrapper-inline-block .left,
+    .wrapper-inline-block .right {
+        display: inline-block;
+        /* 顶端对齐 */
+        vertical-align: top;   
+        box-sizing: border-box;
+    }
+
+    .wrapper-inline-block .right{
+      width: calc(100% - 140px);
+    }
+
+    /* 双float方案 */
+    .wrapper-double-float{
+      /* 使成为BFC，清除浮动 */
+      overflow: hidden;
+      box-sizing: content-box;
+    }
+    .wrapper-double-float .left,
+    .wrapper-double-float .right {
+      float: left;
+      box-sizing: border-box;
+    }
+    .wrapper-double-float .right{
+        width: calc(100% - 140px);
+    }
+    
+      /* float+margin-left 方案 */
+
+      .wrapper-float {
+/* 清除浮动 */
+          overflow: hidden;        
+      }
+
+    .wrapper-float .left {
+        float: left;
+    }
+
+    .wrapper-float .right {
+        margin-left: 150px;
+    }
+
+/* absolute+margin-left */
+    .wrapper-absolute .left {
+        position: absolute;
+    }
+
+    .wrapper-absolute .right {
+        margin-left: 150px;
+    }
+
+    /* float + BFC */
+    .wrapper-float-bfc{
+      overflow: auto;
+    }
+
+    .wrapper-float-bfc .left{
+      float: left;
+    }
+
+    .wrapper-float-bfc .right{
+      overflow: hidden;
+    }
+
+    /* flex 方案 */
+    .wrapper-flex{
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .wrapper-flex .left {
+      flex: 0 0 auto;
+    }
+
+    .wrapper-flex .right {
+      flex: 1 1 auto;
+    }
+
+      /* grid方案 */
+  .wrapper-grid {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      align-items: start;
+  }
+    .wrapper-grid .left,
+    .wrapper-grid .right {
+        box-sizing: border-box;
+    }
+
+    .wrapper-grid .left {
+        grid-column: 1;
+    }
+
+    .wrapper-grid .right {
+        grid-column: 2;
+    }
+
+    /* table */
+    .wrapper-table{
+        overflow: hidden;
+        display: table;
+        width: 100%
+    }
+
+    .wrapper-table .left,
+    .wrapper-table .right{
+        display: table-cell;
+    }
+    .wrapper-table .left{
+       /* width: 140px */
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrapper wrapper-table">
+    <div class="left">
+      左边固定宽度，高度不固定
+       </br> </br></br></br>高度有可能会很小，也可能很大。
+    </div>
+    <div class="right">
+      这里的内容可能比左侧高，也可能比左侧低。宽度需要自适应。</br>
+      基本的样式是，两个div相距20px, 左侧div宽 120px
+    </div>
+  </div>
+</body>
+
+</html>

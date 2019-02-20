@@ -25,9 +25,9 @@
       margin: 20px;
       background: lightgreen;
       border: 2px solid lightgreen;
-      /*display:inline-block;*/
-      /*overflow:hidden;*/
-      /*float: left;*/
+      /* display:inline-block; */
+      /* overflow:hidden; */
+      /* float: left; */
       /*position: absolute;*/
     }
 
@@ -39,10 +39,35 @@
       height: 200px;
       float: left;
     }
-
     li {
       margin: 25px;
     }
+
+    .container{
+        margin: 30px auto;
+        width:600px;
+        height: 300px;
+    }
+    .p{
+      border:solid 3px #a33;
+    }
+    .c{
+        width: 100px;
+        height: 100px;
+        background-color: #060;
+        margin: 10px;
+        float: left;
+    }
+
+    .floatfix:after{
+      content: '';
+      display: block;
+      clear: both;
+    }
+    .floatfix:before{
+      clear: both;
+    }
+
   </style>
 
 
@@ -55,10 +80,17 @@
       <li>2</li>
       <li>3</li>
     </ul>
+    <!-- <div style="clear: both"></div> -->
+  </div>
+
+ <div class="p floatfix">
+    <div class="c">111111</div>
+    <div class="c">222222</div>
+    <div class="c">333333</div>
+    <div style="clear:both;"></div>
   </div>
 
 </body>
-
 </html>
 
 包围浮动
