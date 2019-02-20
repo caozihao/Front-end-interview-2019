@@ -38,12 +38,12 @@ const b = baum();
 
 // 要使顺序输出1，2，3，4
 
-b.next().value.then(()=>{
-  b.next();
-  b.next().value.then(()=>{
-    b.next();
-  })
-})
+// b.next().value.then(()=>{
+//   b.next();
+//   b.next().value.then(()=>{
+//     b.next();
+//   })
+// })
 
 
 // 优化后
