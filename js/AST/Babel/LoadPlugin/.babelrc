@@ -4,29 +4,29 @@
   ],
   // 使用 babel-plugin-import 按需加载插件，强烈推荐
   "plugins": [
-    // ["import",{
-    //   "libraryName":"lodash",
-    //     "libraryDirectory": "lib", // 我们在引用哪个库的时候使用我们写的这个插件，这里的意思是当我们引用lodash库的时候使用我们写的这个插件
-    //   },
-    //   "lodash"
-    // ],
-
-  //  [
-  //       {
-  //         "library": "lodash"
-  //       }
-  //  ]
-  
-
     // babel插件的文件夹命名，必须以 babel-plugin-xxx(你写的插件名)命名，否则引入不成功
-   [ 
-    "import",
+  //  [ 
+  //   "import",
+  //   {
+  //   // 引入的时候，不需要 babel-plugin-
+  //     "libraryName": "demand-loading",
+  //     "libraryDirectory":"lib"
+  //   },
+  //   "demand-loading"
+  //  ],
+  //   [
+  //     "import",
+  //     {
+  //       "libraryName": "lodash",
+  //       "libraryDirectory": "lib", // 我们在引用哪个库的时候使用我们写的这个插件，这里的意思是当我们引用lodash库的时候使用我们写的这个插件
+  //     },
+  //     "lodash"
+  //   ],
+  [
+    "demand-loading",
     {
-    // 引入的时候，不需要 babel-plugin-
-      "libraryName": "demand-loading",
-      "libraryDirectory":"lib"
-    },
-    "demand-loading"
-   ],
+      "library": "lodash",
+    }
+  ]
   ]
 }

@@ -1,4 +1,3 @@
-import 'babel-plugin-demand-loading'
 import {flatten,join} from 'lodash'
 
 // import flatten from 'lodash/flatten'
