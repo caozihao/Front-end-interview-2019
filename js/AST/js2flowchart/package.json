@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "js2flowchart": "^1.1.7"
+  },
+  "scripts": {
+    "js2flowchart": "js2flowchart"
+  }
+}

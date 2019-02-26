@@ -4,16 +4,6 @@
   ],
   // 使用 babel-plugin-import 按需加载插件，强烈推荐
   "plugins": [
-    // babel插件的文件夹命名，必须以 babel-plugin-xxx(你写的插件名)命名，否则引入不成功
-  //  [ 
-  //   "import",
-  //   {
-  //   // 引入的时候，不需要 babel-plugin-
-  //     "libraryName": "demand-loading",
-  //     "libraryDirectory":"lib"
-  //   },
-  //   "demand-loading"
-  //  ],
   //   [
   //     "import",
   //     {
@@ -22,11 +12,12 @@
   //     },
   //     "lodash"
   //   ],
-  [
-    "demand-loading",
-    {
-      "library": "lodash",
-    }
-  ]
+  //  babel插件的文件夹命名，必须以 babel-plugin-xxx(你写的插件名)命名，否则引入不成功
+    [
+      "demand-loading",
+      {
+        "library": "lodash",
+      }
+    ]
   ]
 }
