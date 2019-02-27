@@ -52,8 +52,8 @@ function debounceFunc3(fn, wait, immediate ) {
     // 2，把左右两边的数字转化为二进制，然后每一位分别进行比较，如果相等就为1，不相等即为0
     // 3，同时&具有强制转换的功能，把false,true转换成了0和1进行比较。而0又表示false的意思，所以带有false的都挂掉了，偶尔也可以当做逻辑与来使用
     if (timer) clearTimeout(timer)
-   
-    if (immediate  && !timer) {
+
+    if (immediate && !timer) {
       // 使用apply 确保 在 fn 函数里的 this 指向的是 input对象(不然就指向 window 了)
       fn.apply(context, args)
       // fn()
@@ -69,7 +69,7 @@ function debounceFunc3(fn, wait, immediate ) {
 // 加上取消按钮
 function debounceFunc4(fn, wait, immediate) {
   let timer = null;
-  
+
   let debounce = function () {
     let args = arguments;
     let context = this;
@@ -121,7 +121,7 @@ var cancelDebounce = document.getElementById('cancel-debounce');
 
 // debounce1.addEventListener('input', debounceFunc(log, 1000, false))
 // debounce2.addEventListener('input', debounceFunc2(log, 1000, false))
-debounce3.addEventListener('input', debounceFunc3(log, 1000, false))
+debounce3.addEventListener('input', debounceFunc3(log, 1000, true))
 
 let debounceObj = debounceFunc4(log, 2000, true);
 
