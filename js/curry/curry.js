@@ -112,12 +112,13 @@ const addCurryResult2 = addCurry2(1, 2, 3)(1)(2)(3)(4, 5, 6)(7, 8);
 const addCurryResult3 = addCurry3(1, 2, 3)(1)(2)(3)(4, 5, 6)(7, 8);
 
 
-let showNumberDom1 = document.querySelector("#show-number-1");
-let showNumberDom2 = document.querySelector("#show-number-2");
-let showNumberDom3 = document.querySelector("#show-number-3");
-showNumberDom1.innerHTML = addCurryResult1;
-showNumberDom2.innerHTML = addCurryResult2;
-showNumberDom3.innerHTML = addCurryResult3;
+// let showNumberDom1 = document.querySelector("#show-number-1");
+// let showNumberDom2 = document.querySelector("#show-number-2");
+// let showNumberDom3 = document.querySelector("#show-number-3");
+
+// showNumberDom1.innerHTML = addCurryResult1;
+// showNumberDom2.innerHTML = addCurryResult2;
+// showNumberDom3.innerHTML = addCurryResult3;
 
 // log('addCurryResult1 ->', addCurryResult1);
 // log('addCurryResult2 ->', addCurryResult2);
@@ -152,6 +153,7 @@ function commonCurry2(func) {
   return _func;
 }
 
+
 function addFunc(...args) {
   // const res = args.reduce(function (a, b) {
   //   return a + b;
@@ -164,13 +166,14 @@ function addFunc(...args) {
   // log('addFunc res ->', res)
   return res;
 }
+ 
 
 const a = commonCurry(addFunc, 1, 2, 3)(1)(2)(3, 4, 5, 5)(5, 6, 6, 7, 8, 8)(1)(1)(1)()
 const a2 = commonCurry2(addFunc, 1, 2, 3)(1)(2)(3, 4, 5, 5)(5, 6, 6, 7, 8, 8)(1)(1)(1)
 
-// log('a + 10 ->', a + 10);
-// log('a(10) + 10 ->', a(10) + 10);
-// log('a(10)(1,2,3)(4,5,6) + 10) ->', a(10)(1, 2, 3)(4, 5, 6) + 10);
+log('a + 10 ->', a + 10);
+// log('a(10) + 10 ->', a(10) + 10);  //报错 
+// log('a(10)(1,2,3)(4,5,6) + 10) ->', a(10)(1, 2, 3)(4, 5, 6) + 10); //报错 
 
 log('a2 + 10 ->', a2 + 10);
 log('a2(10) + 10 ->', a2(10) + 10);
