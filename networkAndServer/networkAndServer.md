@@ -50,3 +50,29 @@
       * 最小粒度只到s,s以内的改动无法检测到
     * Etag的优先级高于Last-Modified
 
+##  跨域
+
+* JSONP：利用<script>标签不受跨域限制的特点，缺点是只能支持get请求
+```
+function jsonp(url, jsonpCallback, success) {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.type = 'text/javascript'
+  window[jsonpCallback] = function(data) {
+    success && success(data)
+  }
+  document.body.appendChild(script)
+}
+```
+* 后端设置  CORS: Access-Control-Allow-Origin：*
+* postMessage
+* webpack：利用proxy
+* 用nginx
+
+##  安全
+
+* XSS攻击：注入恶意代码
+  * cookie设置 httpOnly
+  * 转义页面上的输入内容和输出内容
+* 

@@ -114,4 +114,72 @@
 ### Websocket
 
   * websocket是HTML5中的协议，是一种在单个TCP连接上进行全双工通信的协议，支持持久连接，http协议不支持持久性连接。Http1.0和HTTP1.1都不支持持久性的链接，HTTP1.1中的keep-alive，将多个http请求合并为1个
-                                                                                                                           
+
+### get / post 区别
+
+#### 语义上的区别
+
+请求方式|GET|POST
+-|-|-
+参数位置|通过URL传递|放在Request body中
+参数大小|受限于浏览器url大小，一般不超过32k|无限制 
+安全性|多数携带在url中，安全性低|相对于GET请求，安全性更高
+行为|获取数据|提交数据
+书签|可收藏为书签|不可收藏为书签
+历史|参数保留在浏览器历史中。|参数不会保存在浏览器历史中
+幂等性|幂等|不幂等
+编码类型|application/x-www-form-url|encodedapplication/x-www-form-urlencoded 或 multipart/form-data。为二进制数据使用多重编码。
+数据类型|只允许ASCII字符|没有限制，也允许二进制数据
+
+
+**幂等性：
+* 同一个请求发送多次和仅执行一次的效果完全相同
+* 按照RFC规范，PUT，DELETE和安全方法都是幂等的，服务端实现是否幂等是无法确保的。
+* 引入幂等主要是为了处理同一个请求重复发送的情况
+* 比如在请求响应前失去连接，如果方法是幂等的，就可以放心地重发一次请求。这也是浏览器在后退/刷新时遇到POST会给用户提示的原因：POST语义不是幂等的，重复请求可能会带来意想不到的后果。
+
+
+####  语法上的区别
+* GET和POST是http协议中两种发送请求的方式，而http是基于TCP/IP协议的的关于数据如何在万维网中通信的协议
+* HTTP的底层是TCP/IP。所以GET和POST的底层也是TCP/IP，也就是说，GET/POST都是TCP链接。GET和POST能做的事情是一样一样的。你要给GET加上request body，给POST带上url参数，技术上是完全行的通的。 
+* GET产生一个TCP数据包，而POST在数据量大的时候会产生两个TCP数据包
+* 对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200
+* 对于POST，浏览器先发header，服务器响应100，然后再发送data，服务器响应200
+* 在网络环境好的情况下，发一次包的时间和发两次包的时间差别基本可以无视。而在网络环境差的情况下，两次包的TCP在验证数据包完整性上，有非常大的优点
+
+
+参考文章(https://www.cnblogs.com/logsharing/p/8448446.html)
+(https://www.cnblogs.com/logsharing/p/8448446.html)
+
+
+### Websocket
+
+### TCP三次握手     
+建立连接前，客户端和服务端需要通过握手来确认对方:
+
+* 客户端发送 syn(同步序列编号) 请求，进入 syn_send 状态，等待确认
+* 服务端接收并确认 syn 包后发送 syn+ack 包，进入 syn_recv 状态
+* 客户端接收 syn+ack 包后，发送 ack 包，双方进入 established 状态
+
+### TCP四次握手
+
+* 客户端 --FIN --> 服务端，FIN--WAIT
+* 服务端 --ACK --> 客户端，CLOSE-WAIT
+* 服务端 --ACK,FIN -->客户端，LAST-ACK
+* 客户端 --ACK -->服务端，CLOSED
+
+### Node 的 Event Loop: 6个阶段
+
+### Node的Event Loop：6个阶段
+
+* timer阶段：执行到期的 setTimeout  / setInterval 队列回调
+* I/O阶段：执行上轮循环残留的callback
+* idle，prepare
+* poll：等待回调
+  * 1，执行回调
+  * 2，执行定时器
+    * 如有到期的 setTimeout / setInterval.则返回Timer阶段
+    * 如有 setImmediate,则前往check阶段
+  * check
+    * 执行setImmediate
+  * close callbacks
