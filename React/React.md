@@ -198,6 +198,8 @@ class Component extends React.Component {
     ```
     
     ```
+  * 提取状态：可以通过props将被包裹组件中的state依赖外层，例如用于转换受控组件
+
 
 
 ##  参考文章:
