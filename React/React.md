@@ -14,8 +14,49 @@ React的核心流程可以分为两个部分：
   * 确定是否需要重新渲染
 * commit：
   * 如需要。则操作dom节点更新
-  
-#### ps 
+
+## diff算法 (待补充)
+
+  *  传统diff算法：利用循环递归的方式对所有节点依次对比，算法的复杂度是O(n3)，其中n为节点总数，所以在一个大项目中性能将会存在极大的瓶颈。
+  *  react-diff
+     *  作用：计算Virtual DOM中真正变化的部分，并只针对该部分进行原生DOM操作，而非重新渲染整个页面
+     *  策略：对传统diff算法的优化主要基于三个策略，这些策略最后都是对比vdom，算法复杂度是O(n)总结如下：
+        *  DOM结构发生改变：直接卸载并重新creat
+        *  DOM结构一样：不会卸载，但是会update
+        *  所有同一层级的子节点， 他们都可以通过key来区分，同时遵循1，2两点
+    * Key
+      * 没有key也不会影响程序执行的正确性，这个key的存在与否只会影响diff算法的复杂度，如果不加key，diff算法就会以暴力的方式去根据一二的策略更新，但是你加了key,diff算法会引入一些另外的操作
+      * 不要用index或者随机数作为key的值，如果你的数据能够确保唯一性，就用数据本身作为key
+      * 如果不是同一个父节点，那么key相同也没关系
+    * tree-diff
+      * React通过updateDepth对virtual DOM树进行层级控制
+      * 对树分层比较，两颗树只对同一层次节点进行比较，如果该节点不存在时，则该节点及子节点会被完全删除，不会再进一步比较
+      * 只需遍历一次，就能完成整棵DOM数的比较
+      * 如果DOM节点出现了跨层级操作，diif会咋办？
+        * diff只简单考虑同层级的节点位置变换，如果是跨层级，就创建节点和删除节点
+    * component-diff
+      * 同一类型的两个组件，按原策略（层级比较）继续比较Virtual DOM树即可
+      * 同一类型的两个组件，组件A变化为组件B时，可能Virtual DOM没有任何变化，如果知道这点（变换的过程中，Virtual DOM没有改变），可节省大量计算时间，所以 用户 可以通过 shouldComponentUpdate() 来判断是否需要 判断计算。
+      * 不同类型的组件，将一个（将被改变的）组件判断为dirty component（脏组件），从而替换 整个组件的所有节点。
+    * element-diff
+      * 当节点处于同一层级时，diff提供三种节点操作：删除，插入，移动
+    * 新旧集合中存在相同节点但位置不同时，如何移动节点：
+      * 在新集合中取得一个元素，判断旧节点中是否存在相同的元素，如果存在，就去判断是否移动该元素
+      * 移动元素的条件就是判断Index < lasIndex:
+        * lastIndex初始值为0，取max(index,lastIndex)的值，index值为在旧集合中的index。
+        * 到index为最后一个元素的时候，diif操作结束
+    * 新集合中有新加入的节点，旧集合中有删除的节点
+      * 新集合对比后，再对旧集合遍历，判断新集合没有，但旧集合有的元素，发现D，删除D，diff操作结束
+    * diff不足与待优化的地方：
+      * 由于移动条件是 判断Index < lasIndex，且 lasIndex是取max(index,lastIndex)，所以当一开始lastIndex为最大时，后面的所有元素都要移动
+      * 因此在开发过程中，尽量减少类似将最后一个节点移动到列表首部的操作，当节点数量过大或更新操作过于频繁时，会影响React的渲染性能
+
+参考文章：
+https://www.jianshu.com/p/fa4ca1fed4cf （浅谈React diff算法与key）
+https://www.jianshu.com/p/3ba0822018cf（React之diff算法）
+
+
+## ps 
 
 componentWillMount componentWillReceiveProps componentWillUpdate 几个生命周期方法，在Reconciliation Phase被调用，有被打断的可能（时间用尽等情况），所以可能被多次调用。其实 shouldComponentUpdate 也可能被多次调用，只是它只返回true或者false，没有副作用，可以暂时忽略。
 
@@ -217,10 +258,39 @@ class Component extends React.Component {
      *  重新渲染： 由于增强函数每次调用是返回一个新组件，因此如果在 Render 中使用增强函数，就会导致每次都重新渲染整个HOC，而且之前的状态会丢失；
 
 
+## SSR
 
+SSR，俗称 服务端渲染 (Server Side Render)，讲人话就是: 直接在服务端层获取数据，渲染出完成的 HTML 文件，直接返回给用户浏览器访问。
+* 前后端分离：前端与服务端隔离，前端动态获取数据，渲染页面。
+* 痛点
+ * 首屏渲染性能瓶颈
+   * 空白延迟: HTML下载时间 + JS下载/执行时间 + 请求时间 + 渲染时间。在这段时间内，页面处于空白的状态。
+ * SEO 问题: 由于页面初始状态为空，因此爬虫无法获取页面中任何有效数据，因此对搜索引擎不友好。
+   * 虽然一直有在提动态渲染爬虫的技术，不过据我了解，大部分国内搜索引擎仍然是没有实现。
 
+最初的服务端渲染，便没有这些问题。但我们不能返璞归真，既要保证现有的前端独立的开发模式，又要由服务端渲染，因此我们使用 React SSR。
+
+* 原理：
+  * Node服务：让前后端运行同一套代码成为可能
+  * Virtual Dom：让前端代码脱离浏览器运行
+*  条件: Node 中间层、 React / Vue 等框架。 结构大概如下:略
+*  开发流程：React + Router + Redux + Koa
+   *  同个项目中，搭建前后端部分，常规结构
+      *  build
+      *  public 
+         *  src
+            *  client
+            *  server
+   * server中使用Koa路由监听页面访问
+   * 通过访问url匹配前端页面路由
+   * 通过页面路由的配置进行 数据获取。通常可以在页面路由中增加 SSR 相关的静态配置，用于抽象逻辑，可以保证服务端逻辑的通用性，如:
+     * 获取数据通常有两种情况：
+       * 中间层也使用 http 获取数据，则此时 fetch 方法可前后端共享；
+       * 中间层并不使用 http，是通过一些 内部调用，例如 Rpc 或 直接读数据库 等，此时也可以直接由服务端调用对应的方法获取数据。通常，这里需要在 ssrConfig 中配置特异性的信息，用于匹配对应的数据获取方法。
+ 
 
 ##  参考文章:
  
-https://github.com/qiqingjin/blog/tree/master/React_Redux
-https://juejin.im/post/5c92f499f265da612647b754#comment (自己实现一个Fiber)
+https://github.com/qiqingjin/blog/tree/master/React_Redux (作者实现的React16的dem)
+https://juejin.im/post/5c92f499f265da612647b754#comment ((中篇)中高级前端大厂面试秘籍，寒冬中为您保驾护航，直通大厂)
+https://blog.csdn.net/qiqingjin/article/details/80118669 (React-从源码分析React Fiber工作原理)
