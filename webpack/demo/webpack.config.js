@@ -12,7 +12,6 @@ module.exports = {
     new HelloFileListPlugin({
       callback: (data) => {
         console.log('!!!!' + data + '')
-
       },
       content: 'Hello Plugin!',
       htmlfilePath: path.join(__dirname, './src/index.html')
