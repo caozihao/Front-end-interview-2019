@@ -31,6 +31,6 @@
 
 ##   babel编译原理
 * babylon将ES6/ES7 代码解析成 AST
-* babel-traverse对AST进行遍历转移，得到新的AST
+* babel-traverse对AST进行遍历转移，(替换、移除和添加节点),得到新的AST
 * 其中用到了babel-types,是一个类Lodash式工具库，包含了构造、验证以及变换 AST 节点的方法
 * 新AST 通过babel-generator 转换成ES5

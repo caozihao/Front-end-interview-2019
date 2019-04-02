@@ -1,37 +1,37 @@
 const log = console.log.bind(this)
 
 // 正常
-function add(a,b,c){
-  return a +b +c;
+function add(a, b, c) {
+  return a + b + c;
 }
 
 // 伪柯里化
-function add2(a){
-  return function(b){
-    return function(c){
+function add2(a) {
+  return function (b) {
+    return function (c) {
       return a + b + c;
     }
   }
 }
 
-const result = add(1,2,3);
+const result = add(1, 2, 3);
 const result2 = add2(1)(2)(3);
 
 // log('result ->', result);
 // log('result2 ->', result2);
 
-function addCurry (){
+function addCurry() {
   // 将arguments 转为 数组
   var args = [].slice.apply(arguments);
 
-  var _add = function(){
-    if (!arguments.length){
-      return args.reduce(function(a,b){
+  var _add = function () {
+    if (!arguments.length) {
+      return args.reduce(function (a, b) {
         return a + b;
       })
-    }else{
+    } else {
       // 将 arguments 放入 args,一下三种都可以
-      [].push.apply(args,arguments);
+      [].push.apply(args, arguments);
       // args = [].concat.apply(args, arguments);
       // args.push(...arguments);
       return _add;
@@ -45,12 +45,12 @@ function addCurry2() {
   var args = [].slice.apply(arguments);
 
   var add = function () {
-    var _add = function(){
+    var _add = function () {
       [].push.apply(args, arguments);
       return _add;
     }
-    _add.toString = function(){
-      return args.reduce(function(a,b){
+    _add.toString = function () {
+      return args.reduce(function (a, b) {
         return a + b;
       })
     }
@@ -59,6 +59,7 @@ function addCurry2() {
   return add(...args);
 }
 
+
 function addCurry3() {
   var args = [].slice.apply(arguments);
 
@@ -66,7 +67,7 @@ function addCurry3() {
     [].push.apply(args, arguments);
     return _add;
   }
-   
+
   _add.toString = function () {
     return args.reduce(function (a, b) {
       return a + b;
@@ -77,17 +78,17 @@ function addCurry3() {
 }
 
 // 使用匿名函数 arguments.callee ，但是在严格模式下不能使用
-function addCurryCallee(){
+function addCurryCallee() {
   var args = [].slice.apply(arguments);
 
-  return function(){
-    if(!arguments.length){
+  return function () {
+    if (!arguments.length) {
       return args.reduce(function (a, b) {
         return a + b;
       })
-    } 
+    }
     [].push.apply(args, arguments);
-   
+
     return arguments.callee;
   }
 }
@@ -103,7 +104,7 @@ function addCurryCallee(){
 // 柯里化的特点：
 // 一个闭包保存参数
 // 一个函数来进行递归
- 
+
 // 多一个执行方法
 const addCurryResult1 = addCurry(1, 2, 3)(1)(2)(3)(4, 5, 6)(7, 8)();
 // 没有执行方法
@@ -125,13 +126,13 @@ const addCurryResult3 = addCurry3(1, 2, 3)(1)(2)(3)(4, 5, 6)(7, 8);
 // log('addCurryResult3 ->', addCurryResult3);
 
 // 一个通用的柯里化函数 (多一个执行方法)
-function commonCurry (func){
+function commonCurry(func) {
   var args = [].slice.call(arguments, 1);
-  var _func = function(){
-    if(!arguments.length){
-      return func.apply(this,args);
-    }else{
-      [].push.apply(args,arguments);
+  var _func = function () {
+    if (!arguments.length) {
+      return func.apply(this, args);
+    } else {
+      [].push.apply(args, arguments);
       return _func;
     }
   }
@@ -141,13 +142,13 @@ function commonCurry (func){
 // 一个通用的柯里化函数（没有执行方法）
 function commonCurry2(func) {
   var args = [].slice.call(arguments, 1);
-  
+
   var _func = function () {
-      [].push.apply(args, arguments);
-      return _func;
+    [].push.apply(args, arguments);
+    return _func;
   }
-   
-  _func.toString = function(){
+
+  _func.toString = function () {
     return func.apply(this, args);
   }
   return _func;
@@ -166,7 +167,7 @@ function addFunc(...args) {
   // log('addFunc res ->', res)
   return res;
 }
- 
+
 
 const a = commonCurry(addFunc, 1, 2, 3)(1)(2)(3, 4, 5, 5)(5, 6, 6, 7, 8, 8)(1)(1)(1)()
 const a2 = commonCurry2(addFunc, 1, 2, 3)(1)(2)(3, 4, 5, 5)(5, 6, 6, 7, 8, 8)(1)(1)(1)
@@ -177,4 +178,4 @@ log('a + 10 ->', a + 10);
 
 log('a2 + 10 ->', a2 + 10);
 log('a2(10) + 10 ->', a2(10) + 10);
-log('a2(10)(1,2,3)(4,5,6) + 10) ->', a2(10)(1,2,3)(4,5,6) + 10);
+log('a2(10)(1,2,3)(4,5,6) + 10) ->', a2(10)(1, 2, 3)(4, 5, 6) + 10);

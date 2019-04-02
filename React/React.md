@@ -373,3 +373,30 @@ SSR，俗称 服务端渲染 (Server Side Render)，讲人话就是: 直接在�
 https://github.com/qiqingjin/blog/tree/master/React_Redux (作者实现的React16的dem)
 https://juejin.im/post/5c92f499f265da612647b754#comment ((中篇)中高级前端大厂面试秘籍，寒冬中为您保驾护航，直通大厂)
 https://blog.csdn.net/qiqingjin/article/details/80118669 (React-从源码分析React Fiber工作原理)
+
+
+##  React 实例化生命周期
+
+1,getDefaultProps()
+
+2,getInitialState()
+
+3,componentWillMount()
+
+4,render()
+
+5,componentDidMount()
+
+## 更新触发5个钩子函数
+
+1,componentWillReceivePorps()
+
+2,shouldComponentUpdate()
+
+3,componentWillUpdate()
+
+4,render()
+
+5,componentDidUpdate()
+
+6,componentWillUnmount()
