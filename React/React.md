@@ -1,6 +1,6 @@
 ##  框架：React
 
-## Fiber
+## Fiber 架构
 
 * 通过对象记录组件上需要做或者已经完成的更新，一个组件可以对应多个Fiber
 
@@ -53,7 +53,7 @@ React的核心流程可以分为两个部分：
 
 参考文章：
 https://www.jianshu.com/p/fa4ca1fed4cf （浅谈React diff算法与key）
-https://www.jianshu.com/p/3ba0822018cf（React之diff算法）
+https://www.jianshu.com/p/3ba0822018cf  （React之diff算法）
 
 
 ## ps 
